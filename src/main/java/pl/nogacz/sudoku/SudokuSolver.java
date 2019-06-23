@@ -8,8 +8,8 @@ import pl.nogacz.sudoku.board.Board;
 public class SudokuSolver {
     public static void main(String[] args) {
         Board board = new Board();
-        board.setNumberInCell(0, 0, 1);
-        board.setNumberInCell(0, 1, 2);
+        //board.displayBoard();
+        board.solve();
         board.displayBoard();
     }
 }

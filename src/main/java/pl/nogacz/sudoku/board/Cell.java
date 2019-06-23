@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Cell {
     private int x;
     private int y;
-    private Integer number = null;
+    private int number = 0;
 
     public Cell(int x, int y) {
         this.x = x;
@@ -23,11 +23,11 @@ public class Cell {
         return y;
     }
 
-    public Integer getNumber() {
+    public int getNumber() {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(int number) {
         this.number = number;
     }
 

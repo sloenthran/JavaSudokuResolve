@@ -1,13 +1,13 @@
 package pl.nogacz.sudoku.board;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Dawid Nogacz on 23.06.2019
  */
 public class Board {
     private Set<Cell> cells = new HashSet<>();
+    private Random random = new Random();
 
     public Board() {
         for(int x = 0; x < 9; x++) {
@@ -17,19 +17,37 @@ public class Board {
         }
     }
 
-    public void solve() {
+    public boolean solve() {
         for(Cell cell : cells) {
-            if(cell.getNumber() == null) {
-                searchValidNumber(cell);
+            if(cell.getNumber() == 0) {
+                return searchPossibleNumbers(cell);
             }
         }
+
+        return true;
     }
 
-    private void searchValidNumber(Cell cell) {
+    private boolean searchPossibleNumbers(Cell cell) {
+        for(int number = 1; number < 10; number++) {
+            if(isAllowedNumber(cell.getX(), cell.getY(), number)) {
+                cell.setNumber(number);
 
+                if(solve()) {
+                    return true;
+                } else {
+                    cell.setNumber(0);
+                }
+            }
+        }
+
+        return false;
     }
 
-    public boolean containsInX(int x, int number) {
+    public boolean isAllowedNumber(int x, int y, int number) {
+        return !(containsInX(x, number) || containsInY(y, number) || containsInBox(x, y, number));
+    }
+
+    private boolean containsInX(int x, int number) {
         for(int i = 0; i < 9; i++) {
             Cell cell = getCell(x, i);
 
@@ -41,12 +59,29 @@ public class Board {
         return false;
     }
 
-    public boolean containsInY(int y, int number) {
+    private boolean containsInY(int y, int number) {
         for(int i = 0; i < 9; i++) {
             Cell cell = getCell(i, y);
 
             if(cell != null && cell.getNumber() == number) {
                 return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean containsInBox(int x, int y, int number) {
+        int newX = x - x % 3;
+        int newY = y - y % 3;
+
+        for(x = newX; x < newX + 3; x++) {
+            for(y = newY; y < newY + 3; y++) {
+                Cell cell = getCell(x, y);
+
+                if(cell != null && cell.getNumber() == number) {
+                    return true;
+                }
             }
         }
 
@@ -67,7 +102,10 @@ public class Board {
 
     public void setNumberInCell(int x, int y, int number) {
         Cell cell = getCell(x, y);
-        cell.setNumber(number);
+
+        if(cell != null) {
+            cell.setNumber(number);
+        }
     }
 
     public void displayBoard() {
