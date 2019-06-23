@@ -71,7 +71,7 @@ public class Board {
         return false;
     }
 
-    public boolean containsInBox(int x, int y, int number) {
+    private boolean containsInBox(int x, int y, int number) {
         int newX = x - x % 3;
         int newY = y - y % 3;
 
