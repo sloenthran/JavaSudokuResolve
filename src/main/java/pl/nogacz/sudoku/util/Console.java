@@ -1,4 +1,4 @@
-package pl.nogacz.sudoku.console;
+package pl.nogacz.sudoku.util;
 
 import java.util.Scanner;
 
@@ -17,15 +17,11 @@ public class Console {
             if (console.hasNextInt()) {
                 data = console.nextInt();
 
-                if(data == 9) {
-                    correctData = true;
+                if (data < 0 || data > max) {
+                    System.out.println("You must write valid number!");
+                    console.nextLine();
                 } else {
-                    if (data < 0 || data > max) {
-                        System.out.println("You must write valid number!");
-                        console.nextLine();
-                    } else {
-                        correctData = true;
-                    }
+                    correctData = true;
                 }
             } else {
                 System.out.println("You must write number!");

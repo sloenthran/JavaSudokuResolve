@@ -17,7 +17,7 @@ public class Board {
         }
     }
 
-    public boolean solve() {
+    public boolean solveSudoku() {
         for(Cell cell : cells) {
             if(cell.getNumber() == 0) {
                 return searchPossibleNumbers(cell);
@@ -32,7 +32,7 @@ public class Board {
             if(isAllowedNumber(cell.getX(), cell.getY(), number)) {
                 cell.setNumber(number);
 
-                if(solve()) {
+                if(solveSudoku()) {
                     return true;
                 } else {
                     cell.setNumber(0);
