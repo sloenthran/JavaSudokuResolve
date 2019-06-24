@@ -1,8 +1,8 @@
 # JavaSudokuSolver [![Build Status](https://travis-ci.org/sloenthran/JavaSudokuSolver.svg?branch=master)](https://travis-ci.org/sloenthran/JavaSudokuSolver)
 
-Simple Java application
+Application to automatically solve sudoku written in Java
 
-![JavaSudokuSolver](https://raw.githubusercontent.com/sloenthran/JavaSudokuSolver/master/src/main/resources/screenshot.png)
+[![JavaSudokuSolver](https://raw.githubusercontent.com/sloenthran/JavaSudokuSolver/master/src/main/resources/screenshot.png)](https://www.youtube.com/watch?v=RyvAP1mT5LQ&feature=youtu.be)
 
 ## Usage
 
