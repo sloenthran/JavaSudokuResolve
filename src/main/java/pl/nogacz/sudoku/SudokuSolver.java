@@ -43,9 +43,7 @@ public class SudokuSolver {
 
                     int number = console.getInt(9);
 
-                    if(board.isAllowedNumber(x, y, number)) {
-                        board.setNumberInCell(x, y, number);
-                    }
+                    board.setNumberInCell(x, y, number);
 
                     break;
                 }
@@ -72,7 +70,12 @@ public class SudokuSolver {
 
         System.out.println("Solve started... Please waiting...");
 
-        board.solveSudoku();
+        if(board.solveSudoku()) {
+            System.out.println("Solved");
+        } else {
+            System.out.println("Unsolvable");
+        }
+
         board.displayBoard();
 
         mainMenu();

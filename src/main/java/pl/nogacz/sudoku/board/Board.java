@@ -1,41 +1,40 @@
 package pl.nogacz.sudoku.board;
 
-import java.util.*;
-
 /**
  * @author Dawid Nogacz on 23.06.2019
  */
 public class Board {
-    private Set<Cell> cells = new HashSet<>();
-    private Random random = new Random();
+    private int[][] cell = new int[9][9];
 
     public Board() {
         for(int x = 0; x < 9; x++) {
             for(int y = 0; y < 9; y++) {
-                cells.add(new Cell(x, y));
+                cell[x][y] = 0;
             }
         }
     }
 
     public boolean solveSudoku() {
-        for(Cell cell : cells) {
-            if(cell.getNumber() == 0) {
-                return searchPossibleNumbers(cell);
+        for(int x = 0; x < 9; x++) {
+            for(int y = 0; y < 9; y++) {
+                if(cell[x][y] == 0) {
+                    return searchPossibleNumbers(x, y);
+                }
             }
         }
 
         return true;
     }
 
-    private boolean searchPossibleNumbers(Cell cell) {
+    private boolean searchPossibleNumbers(int x, int y) {
         for(int number = 1; number < 10; number++) {
-            if(isAllowedNumber(cell.getX(), cell.getY(), number)) {
-                cell.setNumber(number);
+            if(isAllowedNumber(x, y, number)) {
+                cell[x][y] = number;
 
                 if(solveSudoku()) {
                     return true;
                 } else {
-                    cell.setNumber(0);
+                    cell[x][y] = 0;
                 }
             }
         }
@@ -49,9 +48,7 @@ public class Board {
 
     private boolean containsInX(int x, int number) {
         for(int i = 0; i < 9; i++) {
-            Cell cell = getCell(x, i);
-
-            if(cell != null && cell.getNumber() == number) {
+            if(cell[x][i] == number) {
                 return true;
             }
         }
@@ -61,9 +58,7 @@ public class Board {
 
     private boolean containsInY(int y, int number) {
         for(int i = 0; i < 9; i++) {
-            Cell cell = getCell(i, y);
-
-            if(cell != null && cell.getNumber() == number) {
+            if(cell[i][y] == number) {
                 return true;
             }
         }
@@ -77,9 +72,7 @@ public class Board {
 
         for(x = newX; x < newX + 3; x++) {
             for(y = newY; y < newY + 3; y++) {
-                Cell cell = getCell(x, y);
-
-                if(cell != null && cell.getNumber() == number) {
+                if(cell[x][y] == number) {
                     return true;
                 }
             }
@@ -88,23 +81,9 @@ public class Board {
         return false;
     }
 
-    private Cell getCell(int x, int y) {
-        Cell searchCell = new Cell(x, y);
-
-        for(Cell cell : cells) {
-            if(cell.equals(searchCell)) {
-                return cell;
-            }
-        }
-
-        return null;
-    }
-
     public void setNumberInCell(int x, int y, int number) {
-        Cell cell = getCell(x, y);
-
-        if(cell != null) {
-            cell.setNumber(number);
+        if(isAllowedNumber(x, y, number)) {
+            cell[x][y] = number;
         }
     }
 
@@ -122,9 +101,7 @@ public class Board {
                     System.out.print(" | ");
                 }
 
-                Cell cell = getCell(x, y);
-
-                System.out.print(" " + cell.getNumber() + " ");
+                System.out.print(" " + cell[x][y] + " ");
             }
 
             System.out.println("\n");
